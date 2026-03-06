@@ -55,7 +55,6 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
