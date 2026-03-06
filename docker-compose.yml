@@ -20,13 +20,16 @@ services:
           "ping",
           "-h",
           "localhost",
+          "-P",
+          "3306",
           "-u",
           "root",
-          "-prootpassword",
+          "-prootpassword"
         ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
     networks:
       - expense_network
 
