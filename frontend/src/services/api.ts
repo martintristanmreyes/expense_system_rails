@@ -97,7 +97,14 @@ export async function updateExpense(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ expense: data }),
+    body: JSON.stringify({
+      expense: {
+        description: data.description,
+        amount: data.amount,
+        category_id: data.category,
+        date: data.date,
+      },
+    }),
   });
 
   if (!response.ok) {
