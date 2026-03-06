@@ -50,29 +50,19 @@ export async function fetchCategories(): Promise<
  * Create a new expense
  */
 export async function createExpense(data: ExpenseFormData): Promise<Expense> {
-  // Convert category name to category_id
-  const categories = await fetchCategories();
-  const category = categories.find((c) => c.name === data.category);
-
-  const expenseData = {
-    description: data.description,
-    amount: data.amount,
-    category_id: category?.id,
-    date: data.date,
-  };
-
   const response = await fetch(`${API_BASE_URL}/expenses`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ expense: expenseData }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      expense: {
+        description: data.description,
+        amount: data.amount,
+        category_id: data.category,  // category now holds the id
+        date: data.date,
+      },
+    }),
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to create expense");
-  }
-
+  if (!response.ok) throw new Error("Failed to create expense");
   return response.json();
 }
 
