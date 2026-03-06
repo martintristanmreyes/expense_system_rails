@@ -37,7 +37,7 @@ export async function getExpenses(
  * Fetch all categories
  */
 export async function fetchCategories(): Promise<
-  Array<{ id: number; name: string }>
+  Array<{ id: number; name: string; emoji: string | null }>
 > {
   const response = await fetch(`${API_BASE_URL}/categories`);
   if (!response.ok) {
@@ -51,11 +51,12 @@ export async function fetchCategories(): Promise<
  */
 export async function createCategory(
   name: string,
-): Promise<{ id: number; name: string }> {
+  emoji?: string,
+): Promise<{ id: number; name: string; emoji: string | null }> {
   const response = await fetch(`${API_BASE_URL}/categories`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ category: { name } }),
+    body: JSON.stringify({ category: { name, emoji: emoji || null } }),
   });
   if (!response.ok) {
     const error = await response.json();

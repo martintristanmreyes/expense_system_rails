@@ -12,7 +12,7 @@ import { COLORS } from "../constants/colors";
 
 const HistoryPage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [categoryList, setCategoryList] = useState<Array<{ id: number; name: string }>>([]);
+  const [categoryList, setCategoryList] = useState<Array<{ id: number; name: string; emoji: string | null }>>([]);
   const [loading, setLoading] = useState(true);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -93,11 +93,20 @@ const HistoryPage: React.FC = () => {
     }
   };
 
-  const handleAddCategory = async (name: string) => {
-    await createCategory(name);
+  const handleAddCategory = async (name: string, emoji?: string) => {
+    await createCategory(name, emoji);
     setIsCategoryModalOpen(false);
     loadCategories();
   };
+
+  // Build emoji map from categoryList for the breakdown component
+  const emojiMap: Record<string, string> = categoryList.reduce(
+    (acc, cat) => {
+      if (cat.emoji) acc[cat.name] = cat.emoji;
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
 
   // Calculate category breakdown
   const categoryData = expenses.reduce(
@@ -190,11 +199,14 @@ const HistoryPage: React.FC = () => {
               categories={categories}
               total={total}
               totalCount={totalCount}
+              emojiMap={emojiMap}
             />
             <div style={{ marginTop: "32px" }}>
               <CalendarExpenseTable
                 expenses={expenses}
-                onExpenseUpdated={fetchExpenses}
+				onExpenseUpdated={fetchExpenses}
+                emojiMap={emojiMap}
+			    categories={categoryList}
               />
             </div>
           </>

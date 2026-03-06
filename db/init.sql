@@ -3,10 +3,13 @@ CREATE DATABASE IF NOT EXISTS expense_system_development CHARACTER SET utf8mb4 C
 
 USE expense_system_development;
 
+SET NAMES utf8mb4;
+
 -- Create categories table
 CREATE TABLE IF NOT EXISTS categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL UNIQUE,
+  emoji VARCHAR(10) NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_name (name)
@@ -28,28 +31,28 @@ CREATE TABLE IF NOT EXISTS expenses (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Seed categories
-INSERT INTO categories (name) VALUES
-  ('Food'),
-  ('Transport'),
-  ('Supplies'),
-  ('Entertainment'),
-  ('Utilities')
+INSERT INTO categories (name, emoji) VALUES
+  ('Food','🍔'),
+  ('Transport','🚗'),
+  ('Supplies','📦'),
+  ('Entertainment','🎬'),
+  ('Utilities','💡')
 ON DUPLICATE KEY UPDATE name=name;
 
 -- Seed expenses
 INSERT INTO expenses (description, amount, category_id, payer_name, date) VALUES
-  ('Team Lunch at Italian Restaurant', 1500.50, 1, 'John Doe',      '2026-03-01'),
-  ('Grab to Client Meeting',           350.00,  2, 'Jane Smith',    '2026-03-02'),
-  ('Office Supplies - Pens and Paper', 450.75,  3, 'Mike Johnson',  '2026-03-03'),
-  ('Team Building Dinner',             2800.00, 1, 'Sarah Lee',     '2026-03-04'),
-  ('Taxi to Airport',                  800.00,  2, 'John Doe',      '2026-03-05'),
-  ('Coffee and Snacks for Meeting',    250.25,  1, 'Emily Chen',    '2026-03-06'),
-  ('Printer Ink Cartridges',           680.00,  3, 'Mike Johnson',  '2026-03-07'),
-  ('Uber for Site Visit',              420.50,  2, 'Jane Smith',    '2026-03-08'),
-  ('Client Lunch Meeting',             1850.00, 1, 'Sarah Lee',     '2026-03-09'),
-  ('Office Cleaning Supplies',         320.00,  3, 'Emily Chen',    '2026-03-10'),
-  ('Team Movie Night',                 1200.00, 4, 'John Doe',      '2026-03-11'),
-  ('Internet Bill',                    2500.00, 5, 'Mike Johnson',  '2026-03-12'),
-  ('Breakfast Meeting with Client',    580.00,  1, 'Jane Smith',    '2026-03-13'),
-  ('Bus Tickets for Conference',       150.00,  2, 'Sarah Lee',     '2026-03-14'),
-  ('Electricity Bill',                 3200.00, 5, 'Emily Chen',    '2026-03-15');
+  ('Team Lunch at Italian Restaurant', 1500.50, 1, 'John Doe', '2026-03-01'),
+  ('Grab to Client Meeting', 350.00, 2, 'Jane Smith', '2026-03-02'),
+  ('Office Supplies - Pens and Paper', 450.75, 3, 'Mike Johnson', '2026-03-03'),
+  ('Team Building Dinner', 2800.00, 1, 'Sarah Lee', '2026-03-04'),
+  ('Taxi to Airport', 800.00, 2, 'John Doe', '2026-03-05'),
+  ('Coffee and Snacks for Meeting', 250.25, 1, 'Emily Chen', '2026-03-06'),
+  ('Printer Ink Cartridges', 680.00, 3, 'Mike Johnson', '2026-03-07'),
+  ('Uber for Site Visit', 420.50, 2, 'Jane Smith', '2026-03-08'),
+  ('Client Lunch Meeting', 1850.00, 1, 'Sarah Lee', '2026-03-09'),
+  ('Office Cleaning Supplies', 320.00, 3, 'Emily Chen', '2026-03-10'),
+  ('Team Movie Night', 1200.00, 4, 'John Doe', '2026-03-11'),
+  ('Internet Bill', 2500.00, 5, 'Mike Johnson', '2026-03-12'),
+  ('Breakfast Meeting with Client', 580.00, 1, 'Jane Smith', '2026-03-13'),
+  ('Bus Tickets for Conference', 150.00, 2, 'Sarah Lee', '2026-03-14'),
+  ('Electricity Bill', 3200.00, 5, 'Emily Chen', '2026-03-15');
